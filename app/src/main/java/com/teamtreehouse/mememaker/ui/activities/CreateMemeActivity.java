@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.teamtreehouse.mememaker.R;
+import com.teamtreehouse.mememaker.database.MemeDatasource;
 import com.teamtreehouse.mememaker.models.Meme;
 import com.teamtreehouse.mememaker.models.MemeAnnotation;
 import com.teamtreehouse.mememaker.ui.views.MemeImageView;
@@ -173,6 +174,19 @@ public class CreateMemeActivity extends Activity {
             EditText editText = mMemeTexts.get(i);
             MemeAnnotation annotation = mCurrentMeme.getAnnotations().get(i);
             annotation.setTitle(editText.getText().toString());
+
+        }
+
+        // Creamos un datasource pasando el contexto
+        MemeDatasource datasource = new MemeDatasource(this);
+
+        // Si ya existe el meme, hacemos el update
+        if (mCurrentMeme.getId()!= -1 ){
+            datasource.update(mCurrentMeme);
+        } else {
+            // Si no, guardamos el nuevo meme en la base de datos
+            // Creamos los datos del actual meme en la base de datos con el metodo create de la clase MemeDatasource
+            datasource.create(mCurrentMeme);
         }
     }
 }

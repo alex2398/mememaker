@@ -21,7 +21,7 @@ public class MemeMakerApplicationSettings {
     public String getStoragePreference() {
         // Obtenenmos la sharedPreference "storage", y le pasamos el valor por defecto,
         // en caso de que esté inicializada a INTERNAL
-        return mSharedPreferences.getString("Storage", StorageType.INTERNAL);
+        return mSharedPreferences.getString("Storage", StorageType.PUBLIC_EXTERNAL);
     }
         // Establecemos la shared preference "storage" pasandole como cadena
         // el tipo de almacenamiento

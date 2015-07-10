@@ -30,6 +30,8 @@ import com.teamtreehouse.mememaker.ui.activities.CreateMemeActivity;
 import com.teamtreehouse.mememaker.ui.activities.MemeSettingsActivity;
 import com.teamtreehouse.mememaker.utils.FileUtilities;
 
+import java.util.ArrayList;
+
 
 public class MemeItemFragment extends ListFragment {
 
@@ -69,6 +71,11 @@ public class MemeItemFragment extends ListFragment {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         Toast.makeText(MemeItemFragment.this.getActivity(), "Should delete", Toast.LENGTH_LONG).show();
+
+                                        MemeDatasource datasource = new MemeDatasource(MemeItemFragment.this.getActivity());
+                                        datasource.delete(memeId);
+                                        refreshMeme();
+
                                         mMemeItemListAdapter.notifyDataSetChanged();
                                         mMenu.findItem(R.id.share_action).setVisible(true);
                                         mMenu.findItem(R.id.edit_action).setVisible(true);
@@ -86,10 +93,22 @@ public class MemeItemFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        MemeDatasource datasource = new MemeDatasource(getActivity());
+        refreshMeme();
+
 
     }
 
+    public void refreshMeme() {
+        // En este metodo creamos el datasource para leer los memes grabados en la base de datos
+        // y pasarlos al listAdapter para que los presene en el fragment
+
+        // La clase MemeDataSource la usamos cada vez que queramos acceder a la base de datos para cualquier
+        // operacion CRUD
+
+        MemeDatasource datasource = new MemeDatasource(getActivity());
+        ArrayList<Meme> memes = datasource.read();
+        setListAdapter(new MemeItemListAdapter(getActivity(),memes));
+    }
 
 
     @Override

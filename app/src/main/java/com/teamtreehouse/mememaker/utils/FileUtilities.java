@@ -41,10 +41,10 @@ public class FileUtilities {
             FileOutputStream out = new FileOutputStream(fileToWrite);
 
             // Copiamos el archivo de la entrada a la salida
-            if (!fileToWrite.exists()) {
+            //if (!fileToWrite.exists()) {
 
                 copyFile(in, out);
-            }
+            //}
 
             // Cerramos los archivos
             in.close();
